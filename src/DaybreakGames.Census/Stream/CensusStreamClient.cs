@@ -16,7 +16,7 @@ namespace DaybreakGames.Census.Stream
 
         private static readonly Func<ClientWebSocket> wsFactory = new Func<ClientWebSocket>(() =>
         {
-            return new ClientWebSocket { Options = { KeepAliveInterval = TimeSpan.FromSeconds(5) } };
+            return new ClientWebSocket { Options = { KeepAliveInterval = TimeSpan.FromSeconds(5), RemoteCertificateValidationCallback = (sender, cert, chain, sslPolicyErrors) => true } };
         });
         private static readonly JsonSerializerSettings sendMessageSettings = new JsonSerializerSettings
         {
@@ -62,7 +62,7 @@ namespace DaybreakGames.Census.Stream
             _client = new WebsocketClient(GetEndpoint(), wsFactory)
             {
                 ReconnectTimeout = TimeSpan.FromSeconds(35),
-                ErrorReconnectTimeout = TimeSpan.FromSeconds(30)
+                ErrorReconnectTimeout = TimeSpan.FromSeconds(30),
             };
 
             _client.DisconnectionHappened.Subscribe(info =>
