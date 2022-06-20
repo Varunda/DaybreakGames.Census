@@ -107,7 +107,7 @@ namespace DaybreakGames.Census.Stream
         {
             var sMessage = JsonConvert.SerializeObject(subscription, sendMessageSettings);
 
-            _logger.LogInformation($"Subscribing to census with: {sMessage}");
+            _logger.LogDebug($"Subscribing to census with: {sMessage}");
 
             _client.Send(sMessage);
         }
